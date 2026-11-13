@@ -1,0 +1,31 @@
+
+name: Rotterdam Appointment Checker
+
+on:
+  workflow_dispatch:
+
+  # Scheduled checks can be enabled after testing
+  # and confirming automated access is permitted.
+
+jobs:
+  check-appointments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python libraries
+        run: pip install selenium beautifulsoup4 requests
+
+      - name: Check Rotterdam appointments
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python date_checker.py
