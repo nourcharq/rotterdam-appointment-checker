@@ -3,9 +3,8 @@ name: Rotterdam Appointment Checker
 
 on:
   workflow_dispatch:
-
-  # Scheduled checks can be enabled after testing
-  # and confirming automated access is permitted.
+  schedule:
+    - cron: '*/30 * * * *'
 
 jobs:
   check-appointments:
